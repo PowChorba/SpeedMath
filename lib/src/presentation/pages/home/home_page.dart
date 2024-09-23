@@ -12,15 +12,38 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
-        title: Text('Calculator',style: TextStyle(color: Colors.white),),
-        actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.menu, color: Colors.white,))
-        ],
-        centerTitle: true,
-      ),
-      body: HomeContent()
-    );
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: AppBar(
+            // backgroundColor: Colors.red,
+            backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+            title: Text(
+              'Calculator',
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  fontWeight: FontWeight.bold),
+            ),
+            actions: [
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.menu,
+                    color: Colors.white,
+                    size: 32,
+                  ))
+            ],
+            centerTitle: true,
+          ),
+        ),
+        body: Column(
+          children: [
+            Container(
+                color: Theme.of(context).colorScheme.surfaceContainer,
+                child: Divider(
+                  color: Theme.of(context).colorScheme.primary,
+                )),
+            const Expanded(child: HomeContent())
+          ],
+        ));
   }
 }

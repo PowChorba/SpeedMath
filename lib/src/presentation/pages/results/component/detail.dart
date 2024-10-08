@@ -3,10 +3,15 @@ import 'package:speed_math/src/presentation/pages/results/component/detail_item.
 
 class Detail extends StatelessWidget {
   final double hwComponentValue;
-  const Detail({super.key, required this.hwComponentValue});
+  final double gustDiference;
+
+  const Detail(
+      {super.key, required this.hwComponentValue, required this.gustDiference});
 
   @override
   Widget build(BuildContext context) {
+    final double halfHwComponent = hwComponentValue / 2;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
@@ -49,14 +54,14 @@ class Detail extends StatelessWidget {
                   ),
                   DetailItem(
                     title: '1/2 HW Component',
-                    value: '15',
+                    value: halfHwComponent.toString(),
                   ),
                   const SizedBox(
                     height: 15,
                   ),
                   DetailItem(
                     title: 'Gust Diference',
-                    value: '15',
+                    value: gustDiference.toString(),
                   ),
                   const SizedBox(
                     height: 5,

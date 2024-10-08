@@ -7,14 +7,19 @@ class ResultsContent extends StatelessWidget {
   final String selectedItem;
   final int? vref;
   final double hwComponentValue;
+  final double gustDiference;
+
   const ResultsContent(
       {super.key,
       required this.selectedItem,
       required this.vref,
-      required this.hwComponentValue});
+      required this.hwComponentValue,
+      required this.gustDiference});
 
   @override
   Widget build(BuildContext context) {
+    final bool tailWind = hwComponentValue > 0 ? false : true;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       color: Theme.of(context).colorScheme.surfaceContainer,
@@ -131,11 +136,12 @@ class ResultsContent extends StatelessWidget {
           const SizedBox(
             height: 50,
           ),
-          Detail(hwComponentValue: hwComponentValue),
+          Detail(
+              hwComponentValue: hwComponentValue, gustDiference: gustDiference),
           const SizedBox(
             height: 50,
           ),
-          const Description(),
+          Description(tailWind: tailWind),
           const SizedBox(
             height: 50,
           ),

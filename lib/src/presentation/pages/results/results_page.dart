@@ -27,6 +27,9 @@ class _ResultsPageState extends State<ResultsPage> {
         double.parse(windDirection), double.parse(windIntesity));
     int? vrefValue = vref[selectedItem]![flapSelect]![weight];
 
+    double gustDiference =
+        double.parse(gustIntesity) - double.parse(windIntesity);
+
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
@@ -64,7 +67,8 @@ class _ResultsPageState extends State<ResultsPage> {
                 child: ResultsContent(
                     selectedItem: selectedItem,
                     vref: vrefValue,
-                    hwComponentValue: hwComponentValue))
+                    hwComponentValue: hwComponentValue,
+                    gustDiference: gustDiference))
           ],
         ));
   }

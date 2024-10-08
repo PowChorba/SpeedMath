@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:speed_math/src/presentation/pages/results/component/description_item.dart';
 
 class Description extends StatelessWidget {
-  const Description({super.key});
+  final bool tailWind;
+  Description({super.key, required this.tailWind});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class Description extends StatelessWidget {
                     height: 10,
                   ),
                   DescriptionItem(
-                      title: 'Limited by tailwind rule', value: false),
+                      title: 'Limited by tailwind rule', value: tailWind),
                   const SizedBox(
                     height: 10,
                   ),

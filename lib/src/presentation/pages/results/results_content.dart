@@ -137,7 +137,7 @@ class ResultsContent extends StatelessWidget {
             height: 50,
           ),
           Detail(
-              hwComponentValue: hwComponentValue, gustDiference: gustDiference),
+              hwComponentValue: hwComponentValue, gustDiference: gustDiference,tailWind: tailWind),
           const SizedBox(
             height: 50,
           ),

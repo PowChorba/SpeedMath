@@ -4,13 +4,15 @@ import 'package:speed_math/src/presentation/pages/results/component/detail_item.
 class Detail extends StatelessWidget {
   final double hwComponentValue;
   final double gustDiference;
+  final bool tailWind; 
 
   const Detail(
-      {super.key, required this.hwComponentValue, required this.gustDiference});
+      {super.key, required this.hwComponentValue, required this.gustDiference, required this.tailWind});
 
   @override
   Widget build(BuildContext context) {
     final double halfHwComponent = hwComponentValue / 2;
+    final String gustDiferenceFinal = tailWind ? '-' : gustDiference.toString();
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5),
@@ -61,7 +63,7 @@ class Detail extends StatelessWidget {
                   ),
                   DetailItem(
                     title: 'Gust Diference',
-                    value: gustDiference.toString(),
+                    value: gustDiferenceFinal,
                   ),
                   const SizedBox(
                     height: 5,

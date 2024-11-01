@@ -19,10 +19,19 @@ class _HomeContentState extends State<HomeContent> {
   TextEditingController windDirection = TextEditingController();
   TextEditingController windIntesity = TextEditingController();
   TextEditingController gustIntesity = TextEditingController();
+  bool _buttonDisabled = true;
 
   void changeFlap(String? value) {
     setState(() {
       flap = value!;
+    });
+  }
+
+  void changedButton() {
+    setState(() {
+      if(weight.text.isNotEmpty && runwayHeading.text.isNotEmpty && windDirection.text.isNotEmpty && windIntesity.text.isNotEmpty && gustIntesity.text.isNotEmpty){
+        _buttonDisabled = false;
+      }
     });
   }
 
@@ -129,6 +138,8 @@ class _HomeContentState extends State<HomeContent> {
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () {
+                      changedButton();
+                      !_buttonDisabled ?
                       Navigator.pushNamed(context, 'results', arguments: {
                         'selectedItem': selected,
                         'flap': flap,
@@ -137,7 +148,9 @@ class _HomeContentState extends State<HomeContent> {
                         'windDirection': windDirection.text,
                         'windIntesity': windIntesity.text,
                         'gustIntesity': gustIntesity.text,
-                      });
+                      })
+                      : null;
+                      print(_buttonDisabled);
                       // print(selected);
                       // print(flap);
                       // print(weight.text);
@@ -147,7 +160,7 @@ class _HomeContentState extends State<HomeContent> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        backgroundColor: Theme.of(context).colorScheme.primary),
+                        backgroundColor: !_buttonDisabled ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.primary),
                     child: Text(
                       'CALCULATE',
                       style: TextStyle(

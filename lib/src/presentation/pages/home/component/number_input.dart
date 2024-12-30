@@ -4,11 +4,13 @@ class NumberInput extends StatefulWidget {
   final String title;
   final String labelText;
   final TextEditingController controller;
+  String? Function(String?)? validator;
   NumberInput(
       {super.key,
       required this.controller,
       required this.labelText,
-      required this.title});
+      required this.title,
+      required this.validator});
 
   @override
   State<NumberInput> createState() => _NumberInputState();
@@ -39,6 +41,7 @@ class _NumberInputState extends State<NumberInput> {
           TextFormField(
             controller: widget.controller,
             keyboardType: TextInputType.number,
+            validator: widget.validator,
             onChanged: (text) {
               setState(() {
                 if (widget.controller.text.isEmpty) {

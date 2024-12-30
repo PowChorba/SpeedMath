@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:speed_math/src/presentation/pages/results/component/description_item.dart';
+import 'package:target_speed_737/src/presentation/pages/results/component/description_item.dart';
 
 class Description extends StatelessWidget {
   final bool tailWind;
-  Description({super.key, required this.tailWind});
+  final bool flapPlacard;
+  final bool limitedMaxRule;
+  const Description(
+      {super.key,
+      required this.tailWind,
+      required this.flapPlacard,
+      required this.limitedMaxRule});
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +46,14 @@ class Description extends StatelessWidget {
                     height: 10,
                   ),
                   DescriptionItem(
-                      title: 'Limited by 15 kt max. rule', value: true),
+                      title: 'Limited by 15 kt max. rule',
+                      value: limitedMaxRule),
                   const SizedBox(
                     height: 10,
                   ),
                   DescriptionItem(
                       title: 'Limited by flap placard speed rule',
-                      value: false),
+                      value: flapPlacard),
                   const SizedBox(
                     height: 10,
                   ),

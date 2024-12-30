@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:speed_math/src/presentation/pages/results/component/detail_item.dart';
+import 'package:target_speed_737/src/presentation/pages/results/component/detail_item.dart';
 
 class Detail extends StatelessWidget {
   final double hwComponentValue;
   final double gustDiference;
-  final bool tailWind; 
+  final bool tailWind;
+  final int cwComponentValue;
 
-  const Detail(
-      {super.key, required this.hwComponentValue, required this.gustDiference, required this.tailWind});
+  const Detail({
+    super.key,
+    required this.hwComponentValue,
+    required this.gustDiference,
+    required this.tailWind,
+    required this.cwComponentValue,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +55,7 @@ class Detail extends StatelessWidget {
                   ),
                   DetailItem(
                     title: 'CW Component',
-                    value: '15',
+                    value: cwComponentValue.toString(),
                   ),
                   const SizedBox(
                     height: 15,

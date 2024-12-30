@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:speed_math/src/presentation/pages/results/component/maths.dart';
-import 'package:speed_math/src/presentation/pages/results/component/vref.dart';
-import 'package:speed_math/src/presentation/pages/results/results_content.dart';
+import 'package:target_speed_737/src/presentation/pages/results/component/maths.dart';
+import 'package:target_speed_737/src/presentation/pages/results/component/vref.dart';
+import 'package:target_speed_737/src/presentation/pages/results/results_content.dart';
 
 class ResultsPage extends StatefulWidget {
   const ResultsPage({super.key});
@@ -25,10 +25,15 @@ class _ResultsPageState extends State<ResultsPage> {
     String gustIntesity = arguments['gustIntesity'];
     double hwComponentValue = hwComponent(double.parse(runwayHeading),
         double.parse(windDirection), double.parse(windIntesity));
-    int? vrefValue = vref[selectedItem]![flapSelect]![weight];
+    int vrefValue = vref[selectedItem]![flapSelect]![weight] ?? 140;
+    int maxFlapPlacard = arguments['maxFlapPlacard'] ?? 140;
 
     double gustDiference =
         double.parse(gustIntesity) - double.parse(windIntesity);
+
+    int windIntesityFinal = int.parse(windIntesity);
+    int windDirectionFinal = int.parse(windDirection);
+    int runwayHeadingFinal = int.parse(runwayHeading);
 
     return Scaffold(
         appBar: PreferredSize(
@@ -68,7 +73,11 @@ class _ResultsPageState extends State<ResultsPage> {
                     selectedItem: selectedItem,
                     vref: vrefValue,
                     hwComponentValue: hwComponentValue,
-                    gustDiference: gustDiference))
+                    gustDiference: gustDiference,
+                    maxFlapPlacard: maxFlapPlacard,
+                    windIntesityFinal: windIntesityFinal,
+                    windDirectionFinal: windDirectionFinal,
+                    runwayHeadingFinal: runwayHeadingFinal))
           ],
         ));
   }

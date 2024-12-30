@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "speed_math" "\0"
+            VALUE "FileDescription", "skycumulus" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "speed_math" "\0"
+            VALUE "InternalName", "skycumulus" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "speed_math.exe" "\0"
-            VALUE "ProductName", "speed_math" "\0"
+            VALUE "OriginalFilename", "skycumulus.exe" "\0"
+            VALUE "ProductName", "skycumulus" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

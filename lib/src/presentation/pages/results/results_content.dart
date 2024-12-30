@@ -1,24 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:speed_math/src/presentation/pages/home/component/options.dart';
-import 'package:speed_math/src/presentation/pages/results/component/description.dart';
-import 'package:speed_math/src/presentation/pages/results/component/detail.dart';
+import 'package:target_speed_737/src/presentation/pages/home/component/options.dart';
+import 'package:target_speed_737/src/presentation/pages/results/component/description.dart';
+import 'package:target_speed_737/src/presentation/pages/results/component/detail.dart';
+import 'package:target_speed_737/src/presentation/pages/results/component/maths.dart';
 
 class ResultsContent extends StatelessWidget {
   final String selectedItem;
-  final int? vref;
+  final int vref;
+  final int maxFlapPlacard;
   final double hwComponentValue;
   final double gustDiference;
+  final int windIntesityFinal;
+  final int windDirectionFinal;
+  final int runwayHeadingFinal;
 
   const ResultsContent(
       {super.key,
       required this.selectedItem,
       required this.vref,
       required this.hwComponentValue,
-      required this.gustDiference});
+      required this.maxFlapPlacard,
+      required this.gustDiference,
+      required this.windIntesityFinal,
+      required this.windDirectionFinal,
+      required this.runwayHeadingFinal});
 
   @override
   Widget build(BuildContext context) {
-    final bool tailWind = hwComponentValue > 0 ? false : true;
+    final bool tailWind = hwComponentValue > 0
+        ? false
+        : hwComponentValue < 15
+            ? true
+            : false;
+
+    final bool flapPlacard = (vref + 5) > maxFlapPlacard ? true : false;
+    final bool limitedMaxRule = limitedMaxRuleMath(
+        (hwComponentValue / 2).toInt(),
+        gustDiference.toInt(),
+        hwComponentValue.toInt());
+
+    final cwComponentValue =
+        cwComponent(runwayHeadingFinal, windDirectionFinal, windIntesityFinal);
+
+    final int winAditiveFinal = windAditiveMath((hwComponentValue / 2).toInt(),
+        gustDiference.toInt(), hwComponentValue.toInt());
+
+    final int speedValue = finalSpeed(vref, hwComponentValue, gustDiference,
+        winAditiveFinal, flapPlacard, maxFlapPlacard);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -85,10 +113,10 @@ class ResultsContent extends StatelessWidget {
             decoration: BoxDecoration(
                 border: Border.all(color: const Color.fromRGBO(0, 255, 255, 1)),
                 borderRadius: BorderRadius.circular(10)),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Wind Additive',
                   style: TextStyle(
                       color: Color.fromRGBO(0, 255, 255, 1),
@@ -96,8 +124,8 @@ class ResultsContent extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  '123',
-                  style: TextStyle(
+                  winAditiveFinal.toString(),
+                  style: const TextStyle(
                       color: Color.fromRGBO(0, 255, 255, 1),
                       fontSize: 18,
                       fontWeight: FontWeight.bold),
@@ -113,10 +141,10 @@ class ResultsContent extends StatelessWidget {
             decoration: BoxDecoration(
                 border: Border.all(color: const Color.fromRGBO(255, 0, 255, 1)),
                 borderRadius: BorderRadius.circular(10)),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Target Speed',
                   style: TextStyle(
                       color: Color.fromRGBO(255, 0, 255, 1),
@@ -124,8 +152,8 @@ class ResultsContent extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  '123',
-                  style: TextStyle(
+                  speedValue.toString(),
+                  style: const TextStyle(
                       color: Color.fromRGBO(255, 0, 255, 1),
                       fontSize: 18,
                       fontWeight: FontWeight.bold),
@@ -137,11 +165,17 @@ class ResultsContent extends StatelessWidget {
             height: 50,
           ),
           Detail(
-              hwComponentValue: hwComponentValue, gustDiference: gustDiference,tailWind: tailWind),
+              hwComponentValue: hwComponentValue,
+              gustDiference: gustDiference,
+              tailWind: tailWind,
+              cwComponentValue: cwComponentValue.round()),
           const SizedBox(
             height: 50,
           ),
-          Description(tailWind: tailWind),
+          Description(
+              tailWind: tailWind,
+              flapPlacard: flapPlacard,
+              limitedMaxRule: limitedMaxRule),
           const SizedBox(
             height: 50,
           ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class DetailItem extends StatelessWidget {
   final String title;
   final String value;
-  DetailItem({super.key, required this.title, required this.value});
+  const DetailItem({super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {

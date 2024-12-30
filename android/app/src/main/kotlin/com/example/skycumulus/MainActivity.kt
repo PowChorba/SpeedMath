@@ -1,4 +1,4 @@
-package com.example.speed_math
+package com.example.skycumulus
 
 import io.flutter.embedding.android.FlutterActivity
 

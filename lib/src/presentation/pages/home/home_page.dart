@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:speed_math/src/presentation/pages/home/home_content.dart';
+import 'package:target_speed_737/src/presentation/pages/home/home_content.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

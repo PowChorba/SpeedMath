@@ -31,6 +31,8 @@ class _ResultsPageState extends State<ResultsPage> {
     double gustDiference =
         double.parse(gustIntesity) - double.parse(windIntesity);
 
+    gustDiference = gustDiference < 0 ? 0 : gustDiference;
+
     int windIntesityFinal = int.parse(windIntesity);
     int windDirectionFinal = int.parse(windDirection);
     int runwayHeadingFinal = int.parse(runwayHeading);

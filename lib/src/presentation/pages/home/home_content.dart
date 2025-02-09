@@ -189,8 +189,9 @@ class _HomeContentState extends State<HomeContent> {
                         return 'The value must be less than 100';
                       } else if (int.parse(value) < 0) {
                         return 'The value must be greater than 0';
-                      } else if (int.parse(value) <
-                          int.parse(windIntesity.text)) {
+                      } else if ((int.parse(value) <
+                              int.parse(windIntesity.text)) &&
+                          int.parse(value) != 0) {
                         return "Gust intenstiy can't be smaller than Wind intesity";
                       }
                       return null;

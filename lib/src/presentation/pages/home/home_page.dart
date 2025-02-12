@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:target_speed_737/src/presentation/pages/home/component/hamburguer_dialog.dart';
 import 'package:target_speed_737/src/presentation/pages/home/home_content.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,7 +26,9 @@ class _HomePageState extends State<HomePage> {
             ),
             actions: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    hamburguerDialog(context);
+                  },
                   icon: const Icon(
                     Icons.menu,
                     color: Colors.white,

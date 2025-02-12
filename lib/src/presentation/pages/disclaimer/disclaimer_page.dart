@@ -67,7 +67,12 @@ class _DisclaimerPageState extends State<DisclaimerPage> {
                           fontSize: 16,
                           color: Theme.of(context).colorScheme.onSecondary)),
                 ),
-              )
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              const Text(
+                  'Copyright © 2025 Cumulus Tech SAS. All rights reserved.')
             ],
           ),
         ),

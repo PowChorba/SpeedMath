@@ -72,7 +72,9 @@ class _DisclaimerPageState extends State<DisclaimerPage> {
                 height: 50,
               ),
               const Text(
-                  'Copyright © 2025 Cumulus Tech SAS. All rights reserved.')
+                'Copyright © 2025 Cumulus Tech SAS. All rights reserved.',
+                textAlign: TextAlign.center,
+              )
             ],
           ),
         ),

@@ -1,5 +1,5 @@
 final Map<String, Map<String, int>> maxFlapcard = {
-  'MAX-9': {
+  'MAX 9': {
     'Flap 40': 171,
     'Flap 30': 180,
     'Flap 25': 195,

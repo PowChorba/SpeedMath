@@ -4,6 +4,7 @@ import 'package:target_speed_737/src/presentation/pages/home/component/number_in
 import 'package:target_speed_737/src/presentation/pages/home/component/options.dart';
 import 'package:target_speed_737/src/presentation/pages/home/component/select_input.dart';
 import 'package:target_speed_737/src/presentation/pages/results/component/max_flap.dart';
+import 'package:target_speed_737/src/presentation/pages/results/component/vref.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -208,10 +209,7 @@ class _HomeContentState extends State<HomeContent> {
                       onPressed: () {
                         final validate = _formKey.currentState!.validate();
                         changedButton();
-                        // if (int.parse(weight.text) > 180 &&
-                        //     selected == '-700') {
-                        //   errorDialog(context);
-                        // } else {
+
                         if (validate) {
                           !_buttonDisabled
                               ? Navigator.pushNamed(context, 'results',
@@ -229,12 +227,6 @@ class _HomeContentState extends State<HomeContent> {
                               : null;
                         }
                         // }
-                        // print(_buttonDisabled);
-                        // print(selected);
-                        // print(flap);
-                        // print(weight.text);
-                        // print(vref[selected]![flap]![weight.text]);
-                        // print(maxFlapcard[selected]![flap]);
                       },
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(

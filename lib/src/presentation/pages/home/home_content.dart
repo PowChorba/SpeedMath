@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:target_speed_737/main.dart';
+import 'package:target_speed_737/src/presentation/pages/ads/ad_helper.dart';
 import 'package:target_speed_737/src/presentation/pages/home/component/error_dialog.dart';
 import 'package:target_speed_737/src/presentation/pages/home/component/number_input.dart';
 import 'package:target_speed_737/src/presentation/pages/home/component/options.dart';
@@ -15,7 +18,7 @@ class HomeContent extends StatefulWidget {
   State<HomeContent> createState() => _HomeContentState();
 }
 
-class _HomeContentState extends State<HomeContent> {
+class _HomeContentState extends State<HomeContent> with RouteAware {
   String selected = '-700';
   String flap = 'Flap 30';
   TextEditingController weight = TextEditingController();
@@ -24,6 +27,9 @@ class _HomeContentState extends State<HomeContent> {
   TextEditingController windIntesity = TextEditingController();
   TextEditingController gustIntesity = TextEditingController();
   bool _buttonDisabled = true;
+
+  BannerAd? _bannerAd;
+  InterstitialAd? _interstitialAd;
 
   @override
   void initState() {
@@ -35,12 +41,66 @@ class _HomeContentState extends State<HomeContent> {
     windDirection.addListener(changedButton);
     windIntesity.addListener(changedButton);
     gustIntesity.addListener(changedButton);
+
+    InterstitialAd.load(
+        // adUnitId: 'ca-app-pub-3940256099942544/4411468910',
+        adUnitId: AdHelper.fullScreenAdUnitId,
+        request: AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: (ad) {
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+              onAdDismissedFullScreenContent: (ad) {});
+          setState(() {
+            _interstitialAd = ad;
+          });
+        }, onAdFailedToLoad: (err) {
+          print(err);
+        }));
   }
 
   void changeFlap(String? value) {
     setState(() {
       flap = value!;
     });
+  }
+
+  void _loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: AdHelper.fullScreenAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          _interstitialAd = ad;
+        },
+        onAdFailedToLoad: (error) {
+          _interstitialAd = null;
+        },
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    _interstitialAd?.dispose();
+    weight.dispose();
+    runwayHeading.dispose();
+    windDirection.dispose();
+    windIntesity.dispose();
+    gustIntesity.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    // Called when user navigates back to this screen
+    _loadInterstitialAd(); // Re-load ad here
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+    _loadInterstitialAd(); // Initial load
   }
 
   void changedButton() {
@@ -57,6 +117,19 @@ class _HomeContentState extends State<HomeContent> {
 
   @override
   Widget build(BuildContext context) {
+    void _navigateToResults() {
+      Navigator.pushNamed(context, 'results', arguments: {
+        'selectedItem': selected,
+        'flap': flap,
+        'weight': weight.text,
+        'runwayHeading': runwayHeading.text,
+        'windDirection': windDirection.text,
+        'windIntesity': windIntesity.text,
+        'gustIntesity': gustIntesity.text,
+        'maxFlapPlacard': maxFlapcard[selected]![flap],
+      });
+    }
+
     return Container(
         color: Theme.of(context).colorScheme.surfaceContainer,
         child: ListView(
@@ -207,26 +280,30 @@ class _HomeContentState extends State<HomeContent> {
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
+                        _interstitialAd?.show();
                         final validate = _formKey.currentState!.validate();
                         changedButton();
 
-                        if (validate) {
-                          !_buttonDisabled
-                              ? Navigator.pushNamed(context, 'results',
-                                  arguments: {
-                                      'selectedItem': selected,
-                                      'flap': flap,
-                                      'weight': weight.text,
-                                      'runwayHeading': runwayHeading.text,
-                                      'windDirection': windDirection.text,
-                                      'windIntesity': windIntesity.text,
-                                      'gustIntesity': gustIntesity.text,
-                                      'maxFlapPlacard':
-                                          maxFlapcard[selected]![flap]
-                                    })
-                              : null;
+                        if (validate && !_buttonDisabled) {
+                          if (_interstitialAd != null) {
+                            _interstitialAd!.fullScreenContentCallback =
+                                FullScreenContentCallback(
+                              onAdDismissedFullScreenContent: (ad) {
+                                ad.dispose();
+                                _navigateToResults();
+                              },
+                              onAdFailedToShowFullScreenContent: (ad, error) {
+                                ad.dispose();
+                                _navigateToResults();
+                              },
+                            );
+
+                            _interstitialAd!.show();
+                            _interstitialAd = null;
+                          } else {
+                            _navigateToResults();
+                          }
                         }
-                        // }
                       },
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -253,14 +330,14 @@ class _HomeContentState extends State<HomeContent> {
         ));
   }
 
-  @override
-  void dispose() {
-    // Limpiar los controladores
-    weight.dispose();
-    runwayHeading.dispose();
-    windDirection.dispose();
-    windIntesity.dispose();
-    gustIntesity.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   // Limpiar los controladores
+  //   weight.dispose();
+  //   runwayHeading.dispose();
+  //   windDirection.dispose();
+  //   windIntesity.dispose();
+  //   gustIntesity.dispose();
+  //   super.dispose();
+  // }
 }

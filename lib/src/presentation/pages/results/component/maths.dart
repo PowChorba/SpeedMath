@@ -24,8 +24,8 @@ int windAditiveMath(int hwHalfComponent, int gustDiference, int hwComponent) {
   int temporalwind = hwComponent < 0 ? 5 : hwHalfComponent + gustDiference;
 
   int finalWindComp = temporalwind > 15 ? 15 : temporalwind;
-
-  return finalWindComp;
+  int realFinalWindComp = finalWindComp < 5 ? 5 : finalWindComp;
+  return realFinalWindComp;
 }
 
 bool limitedMaxRuleMath(

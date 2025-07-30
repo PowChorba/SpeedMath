@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:target_speed_737/src/presentation/pages/home/component/hamburguer_dialog.dart';
 import 'package:target_speed_737/src/presentation/pages/results/component/maths.dart';
 import 'package:target_speed_737/src/presentation/pages/results/component/vref.dart';
 import 'package:target_speed_737/src/presentation/pages/results/results_content.dart';
@@ -53,7 +54,9 @@ class _ResultsPageState extends State<ResultsPage> {
             ),
             actions: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    hamburguerDialog(context);
+                  },
                   icon: const Icon(
                     Icons.menu,
                     color: Colors.white,

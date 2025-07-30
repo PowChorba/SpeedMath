@@ -5,7 +5,7 @@ class AdHelper {
     if (Platform.isIOS) {
       return 'ca-app-pub-8561798323577837/6744581095';
     } else if (Platform.isAndroid) {
-      return 'ca-app-pub-8561798323577837~4610755236';
+      return 'ca-app-pub-8561798323577837/7220057965';
     } else {
       throw UnsupportedError('Unsopported');
     }
